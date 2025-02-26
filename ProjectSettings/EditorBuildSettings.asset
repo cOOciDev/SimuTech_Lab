@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: d1c3109bdb54ad54c8a2b2838528e640
+    path: Assets/Scenes/StartScene.unity
+    guid: 7926181a463c3b04383d4e4619f02cc7
+  - enabled: 1
+    path: Assets/Projs/Dena/Scenes/DenaScene.unity
+    guid: 7976a2e370b179c4a9ce6641fa7f3a7e
   m_configObjects: {}
