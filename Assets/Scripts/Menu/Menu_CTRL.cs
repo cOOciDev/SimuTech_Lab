@@ -14,6 +14,24 @@ public class Menu_CTRL : MonoBehaviour
     string Last_Page;
 
     // -------------------------------------------------------------------------------
+
+    public void Start(){
+        Open_Page("Start");
+
+    }   
+
+
+    public void Update(){
+        
+    }  
+
+
+
+
+
+
+
+    // -------------------------------------------------------------------------------
     
 
     void OpenScene(string Name){
@@ -84,6 +102,21 @@ public class Menu_CTRL : MonoBehaviour
                 break;
         }
     }
+
+    // -------------------------------------------------------------------------------
+
+    //  void InstantiateArrayInScrollView()
+    // {
+    //     // Loop through the array and instantiate buttons
+    //     foreach (string item in items)
+    //     {
+    //         GameObject button = Instantiate(buttonPrefab, contentPanel);
+    //         button.GetComponentInChildren<Text>().text = item;  // Set the text of the button to the item name
+
+    //         // You can add listeners to buttons here if needed
+    //         button.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(item));
+    //     }
+    // }
 
     // -------------------------------------------------------------------------------
     
