@@ -2,21 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Menu_CTRL : MonoBehaviour
 {
+
+    // Static instance of Menu_CTRL
+    public static Menu_CTRL instance { get; private set; }
 
     [SerializeField] GameObject Start_Menu_Canvas;
     [SerializeField] GameObject Categorys_Canvas;
     [SerializeField] GameObject Mode_Canvas;
     [SerializeField] GameObject Loading_Canvas;
 
-    string Last_Page;
+
+    
 
     // -------------------------------------------------------------------------------
 
+    #region // ------------------------------------------------------------------------------- Initialize
+    
+    string Last_Page;
+
+
+    
     public void Start(){
-        Open_Page("Start");
+        // Ensure the instance is set
+        if (instance != null && instance != this)
+        {
+            Destroy(gameObject);  // Destroy duplicate if exists
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);  // Keep the instance alive across scene changes
+        }
+
+        // Open_Page("Start");
+        Back_Button_Clicked();
 
     }   
 
@@ -25,22 +48,9 @@ public class Menu_CTRL : MonoBehaviour
         
     }  
 
+    #endregion
 
-
-
-
-
-
-    // -------------------------------------------------------------------------------
-    
-
-    void OpenScene(string Name){
-        // Application.
-        Debug.Log(Name + " Clicked !");
-
-    }
-
-    // -------------------------------------------------------------------------------
+    #region // ------------------------------------------------------------------------------- Button Sound Effect
 
     [SerializeField] AudioSource buttonClickAudioSource;
     [SerializeField] AudioClip buttonClickClip;
@@ -50,28 +60,10 @@ public class Menu_CTRL : MonoBehaviour
         buttonClickAudioSource.PlayOneShot(buttonClickClip);
     }
 
-    public void Back_Button_Clicked()
-    {
-        if (!string.IsNullOrEmpty(Last_Page))
-        {
-            Change_Page(Last_Page, "Start"); // Go back to the previous page or some default one
-        }
-    }
+    #endregion
 
-    // -------------------------------------------------------------------------------
+    #region // ------------------------------------------------------------------------------- Page Management
 
-    public void Change_Page(string _CurrentPage, string _NextPage)
-    {
-        Open_Page("Loading");
-
-        // Store the last page
-        Last_Page = _CurrentPage; // Fix the comparison to assignment
-
-        Open_Page(_NextPage);
-        Close_Page(_CurrentPage);
-
-        Close_Page("Loading");
-    }
 
     void Open_Page(string name)
     {
@@ -103,6 +95,53 @@ public class Menu_CTRL : MonoBehaviour
         }
     }
 
+    public void Change_Page(string _CurrentPage, string _NextPage, string type = null)
+    {
+        Open_Page("Loading");
+
+        // Store the last page
+        Last_Page = _NextPage; // Fix the comparison to assignment
+
+        Open_Page(_NextPage);
+        Close_Page(_CurrentPage);
+
+        Close_Page("Loading");
+    }
+
+    public void Back_Button_Clicked()
+    {
+        if (!string.IsNullOrEmpty(Last_Page))
+        {
+            Change_Page(Last_Page, "Start"); // Go back to the previous page or some default one
+            Debug.Log("back    "+ Last_Page);
+        }
+        else{
+            Open_Page("Start");
+        }
+    }
+    #endregion
+
+    #region // ------------------------------------------------------------------------------- Buttons
+    
+    public void Boat_Button_Cliked(){
+        Change_Page(Last_Page, "Catrgory");
+        Debug.Log("klickedddddd");
+    }
+
+
+    #endregion
+
+    // -------------------------------------------------------------------------------
+    
+    void OpenScene(string Name){
+        // Application.
+        Debug.Log(Name + " Scene is Openingh ... ");
+
+        // Use SceneManager to load the scene by its name
+        SceneManager.LoadScene(Name);  // Loads the scene based on the passed string
+
+    }
+
     // -------------------------------------------------------------------------------
 
     //  void InstantiateArrayInScrollView()
@@ -117,17 +156,6 @@ public class Menu_CTRL : MonoBehaviour
     //         button.GetComponent<Button>().onClick.AddListener(() => OnButtonClick(item));
     //     }
     // }
-
-    // -------------------------------------------------------------------------------
-    
-    public void Dena_Button_Cliked(){
-        OpenScene("DenaScene");
-    }
-
-
-
-
-    
 
 
 }
